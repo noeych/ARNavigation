@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Pose Estimation</title> 
+</head>
+<body>
+  <!-- 이미지 업로드 -->
+  <!-- <input type="file" id="imageInput" accept="image/*"><br><br>  -->
+
+  <!-- 버튼 수정 전-->
+  <!-- <button onclick="testEstimatePose()">Estimate Pose</button>
+  <button onclick="testSendTransformation()">Send Transformation</button>
+  <button onclick="testSendPath()">Send Path Request</button>  -->
+
+  <!-- 버튼 수정 후 (WebXR 카메라 연동) -->
+  <button id="start-ar">AR START</button>
+  <button id="capture" onclick="captureAndEstimatePose()">Capture & Estimate Pose</button>
+  <button id="transform" onclick="sendFinalTransformation()">Send Final Transformation</button>
+  <button id="path" onclick="testSendPath()">Send Path Request</button>
+
+  <!-- 모듈 스크립트 불러오기 -->
+  <script type="module" src="./client.js"></script>
+
+</body>
+</html>
