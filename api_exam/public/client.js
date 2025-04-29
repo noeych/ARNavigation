@@ -14,6 +14,35 @@ let gl = null;
 let isCaptureRequested = false;
 let isCapturing = false;
 
+
+// --- 테스트 ---
+window.addEventListener("load", async () => {
+    const video = document.createElement('video');
+    video.id = 'cameraFeed';
+    video.style.position = 'absolute';
+    video.style.top = '0';
+    video.style.left = '0';
+    video.style.width = '100%';
+    video.style.height = '100%';
+    video.style.zIndex = '-1';
+    video.setAttribute('autoplay', '');
+    video.setAttribute('playsinline', '');
+    document.body.appendChild(video);
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+        video.srcObject = stream;
+        await video.play();
+        console.log("getUserMedia 성공: 카메라 피드 활성화");
+    } catch (err) {
+        console.error("카메라 접근 실패:", err);
+        alert("카메라 접근에 실패했습니다.");
+    }
+});
+// --- 테스트 ---
+
+
+
 // AR 세션 시작
 document.getElementById('start-ar').addEventListener('click', async () => {
     console.log("AR 세션 시작 클릭됨");
@@ -24,7 +53,7 @@ document.getElementById('start-ar').addEventListener('click', async () => {
 
     try {
         xrSession = await navigator.xr.requestSession("immersive-ar", {
-            requiredFeatures: ["local", "hit-test"],
+            requiredFeatures: ["local", "hit-test", "camera-access"],
             optionalFeatures: ["dom-overlay"],
             domOverlay: { root: document.body }
         });
@@ -59,6 +88,7 @@ document.getElementById('start-ar').addEventListener('click', async () => {
 
             const pose = xrFrame.getViewerPose(xrReferenceSpace);
             if (!pose) return;
+
 
             const camera = renderer.xr.getCamera();
             renderer.render(scene, camera);
@@ -98,32 +128,45 @@ async function captureAndSendPose(xrFrame) {
     const relRotation = [orientation.x, orientation.y, orientation.z, orientation.w];
     console.log("상대 pose:", relPosition, relRotation);
 
-    const width = gl.drawingBufferWidth;
-    const height = gl.drawingBufferHeight;
-    const pixels = new Uint8Array(width * height * 4);
-    gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-    console.log("readPixels 완료");
+    const video = document.getElementById("cameraFeed");
+    const videoWidth = video.videoWidth;
+    const videoHeight = video.videoHeight;
 
-    const canvas2D = document.createElement('canvas');
-    canvas2D.width = width;
-    canvas2D.height = height;
-    const ctx2D = canvas2D.getContext('2d');
+    const glCanvas = renderer.domElement;
+    const glWidth = glCanvas.width;
+    const glHeight = glCanvas.height;
 
-    if (!ctx2D) {
-        throw new Error("2D 컨텍스트 생성 실패");
-    }
+    // 캡처용 임시 canvas 생성
+    const finalCanvas = document.createElement("canvas");
+    finalCanvas.width = glWidth;
+    finalCanvas.height = glHeight;
+    const ctx = finalCanvas.getContext("2d");
 
-    const imageData = new ImageData(new Uint8ClampedArray(pixels), width, height);
-    ctx2D.save();
-    ctx2D.translate(0, height);
-    ctx2D.scale(1, -1);
-    ctx2D.putImageData(imageData, 0, 0);
-    ctx2D.restore();
+    // 1. 비디오 프레임 그리기 (배경)
+    ctx.drawImage(video, 0, 0, glWidth, glHeight);
 
+    // 2. WebGL 렌더링 내용 읽어서 덮어쓰기
+    const pixels = new Uint8Array(glWidth * glHeight * 4);
+    gl.readPixels(0, 0, glWidth, glHeight, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+    const imageData = new ImageData(new Uint8ClampedArray(pixels), glWidth, glHeight);
+
+    // WebGL 캡처는 상하 반전되어 있으므로 뒤집어서 draw
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = glWidth;
+    tempCanvas.height = glHeight;
+    const tempCtx = tempCanvas.getContext("2d");
+    tempCtx.putImageData(imageData, 0, 0);
+    ctx.save();
+    ctx.translate(0, glHeight);
+    ctx.scale(1, -1);
+    ctx.drawImage(tempCanvas, 0, 0);
+    ctx.restore();
+
+    // 최종 Blob 생성
     const imageBlob = await new Promise((resolve, reject) => {
-        canvas2D.toBlob(blob => {
+        finalCanvas.toBlob(blob => {
             if (blob) resolve(blob);
-            else reject(new Error("Canvas toBlob 실패"));
+            else reject(new Error("toBlob 실패"));
         }, 'image/jpeg', 0.9);
     });
 
@@ -146,6 +189,7 @@ async function captureAndSendPose(xrFrame) {
     console.log(`pose 페어 저장 완료 (${posePairs.length}개)`);
     alert(`Pose 추정 및 저장 성공! (총 ${posePairs.length}개)`);
 }
+
 
 // Capture & Estimate Pose 버튼
 window.captureAndEstimatePose = () => {
@@ -214,9 +258,6 @@ window.testSendPath = async () => {
         alert("경로 요청 실패");
     }
 };
-
-
-
 
 
 
