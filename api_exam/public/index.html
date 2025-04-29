@@ -19,6 +19,8 @@
   <button id="capture" onclick="captureAndEstimatePose()">Capture & Estimate Pose</button>
   <button id="transform" onclick="sendFinalTransformation()">Send Final Transformation</button>
   <button id="path" onclick="testSendPath()">Send Path Request</button>
+  <video id="cameraFeed" autoplay playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></video>
+
 
   <!-- 모듈 스크립트 불러오기 -->
   <script type="module" src="./client.js"></script>
