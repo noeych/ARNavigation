@@ -49,15 +49,40 @@ document.getElementById('start-ar').addEventListener('click', async () => {
         // 노드 좌표 리스트 (하드코딩)
         if (!cubesAdded) {
             const nodePositions = [
-                { x: 0, y: 0, z: -1.5 }
+                { x: 0, y: 0, z: -1.5 }, // 출발지
+                { x: 0.4, y: 0, z: -2.0 },      // 중간 노드
+                { x: 0.8, y: 0, z: -3.0 },      // 목적지
             ];
-
-            // 각 노드를 3D 씬에 추가
-            nodePositions.forEach(pos => {
-                const node = new THREE.Mesh(geometry, material);
-                node.position.set(pos.x, pos.y, pos.z);
-                scene.add(node);
+            
+            // 노드 시각화 (출발/중간/목적지 구분 색)
+            nodePositions.forEach((pos, i) => {
+                const color = i === 0 ? 0x00ff00 : (i === nodePositions.length - 1 ? 0xff0000 : 0xffff00);
+                const cube = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.15, 0.15, 0.15),
+                    new THREE.MeshBasicMaterial({ color })
+                );
+                cube.position.set(pos.x, pos.y, pos.z);
+                scene.add(cube);
             });
+
+            // 방향 표시 (화살표)
+            for (let i = 0; i < nodePositions.length - 1; i++) {
+                const from = new THREE.Vector3(nodePositions[i].x, nodePositions[i].y, nodePositions[i].z);
+                const to = new THREE.Vector3(nodePositions[i + 1].x, nodePositions[i + 1].y, nodePositions[i + 1].z);
+                const direction = new THREE.Vector3().subVectors(to, from).normalize();
+                const length = from.distanceTo(to);
+                const arrow = new THREE.ArrowHelper(direction, from, length, 0x0000ff);
+                scene.add(arrow);
+            }
+
+            // 전체 경로선 연결
+            const points = nodePositions.map(p => new THREE.Vector3(p.x, p.y, p.z));
+            const pathGeometry = new THREE.BufferGeometry().setFromPoints(points);
+            const pathLine = new THREE.Line(
+                pathGeometry,
+                new THREE.LineBasicMaterial({ color: 0xffffff })
+            );
+            scene.add(pathLine);
 
             cubesAdded = true;
         }
