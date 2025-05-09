@@ -9,45 +9,18 @@ let xrSession = null;
 let xrReferenceSpace = null;
 let renderer = null;
 let scene = null;
-let gl = null;
-
-let isCaptureRequested = false;
-let isCapturing = false;
-
-
-// --- 테스트 ---
-window.addEventListener("load", async () => {
-    const video = document.createElement('video');
-    video.id = 'cameraFeed';
-    video.style.position = 'absolute';
-    video.style.top = '0';
-    video.style.left = '0';
-    video.style.width = '100%';
-    video.style.height = '100%';
-    video.style.zIndex = '-1';
-    video.setAttribute('autoplay', '');
-    video.setAttribute('playsinline', '');
-    document.body.appendChild(video);
-
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
-        video.srcObject = stream;
-        await video.play();
-        console.log("getUserMedia 성공: 카메라 피드 활성화");
-    } catch (err) {
-        console.error("카메라 접근 실패:", err);
-        alert("카메라 접근에 실패했습니다.");
-    }
-});
-// --- 테스트 ---
-
-
+let cubesAdded = false;
 
 // AR 세션 시작
 document.getElementById('start-ar').addEventListener('click', async () => {
     console.log("AR 세션 시작 클릭됨");
     if (!navigator.xr) {
         alert("WebXR을 지원하지 않는 브라우저입니다.");
+        return;
+    }
+
+    if (xrSession) {
+        console.warn("AR 세션이 이미 실행 중입니다. 중복 실행을 막습니다.");
         return;
     }
 
@@ -70,10 +43,48 @@ document.getElementById('start-ar').addEventListener('click', async () => {
         scene = new THREE.Scene();
         scene.background = null;
 
-        const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+        // 노드 좌표 리스트 (하드코딩)
+        if (!cubesAdded) {
+            const nodePositions = [
+                { x: 0, y: 0, z: -1.5 }
+            ];
+
+            // 각 노드를 3D 씬에 추가
+            nodePositions.forEach(pos => {
+                const node = new THREE.Mesh(geometry, material);
+                node.position.set(pos.x, pos.y, pos.z);
+                scene.add(node);
+            });
+
+            cubesAdded = true;
+        }
+
+        // 애니메이션 루프
+        renderer.setAnimationLoop((timestamp, xrFrame) => {
+            if (!xrFrame || !xrReferenceSpace)
+                return;
+            const pose = xrFrame.getViewerPose(xrReferenceSpace);
+            if (!pose)
+                return;
+
+            const camera = renderer.xr.getCamera();
+            renderer.render(scene, camera);
+        });
+
+    } catch (err) {
+        console.error("AR 세션 시작 실패:", err);
+        alert("AR 세션을 시작할 수 없습니다: " + err.message);
+    }
+});
+
+
+
+/*
         const cube = new THREE.Mesh(geometry, material);
-        cube.position.set(0, 0, -0.5);
+        cube.position.set(0, 0, -1);
         scene.add(cube);
 
         gl = renderer.getContext();
@@ -84,16 +95,29 @@ document.getElementById('start-ar').addEventListener('click', async () => {
         }
 
         renderer.setAnimationLoop((timestamp, xrFrame) => {
-            if (!xrFrame) return;
-
+            if (!xrFrame) {
+                console.warn("xrFrame 없음");
+                return;
+            }
+        
             const pose = xrFrame.getViewerPose(xrReferenceSpace);
-            if (!pose) return;
+            if (!pose) {
+                console.warn("viewerPose 없음");
+                return;
+            }
+
+            // tracking이 가능한 첫 순간
+            if (!trackingReady) {
+                trackingReady = true;
+                console.log("AR tracking 준비 완료 - viewerPose 확보됨");
+            }
 
 
             const camera = renderer.xr.getCamera();
             renderer.render(scene, camera);
 
             if (isCaptureRequested && !isCapturing && gl) {
+                console.log("캡처 조건 만족 - captureAndSendPose 호출 예정");
                 isCapturing = true;
                 isCaptureRequested = false;
 
@@ -114,14 +138,29 @@ document.getElementById('start-ar').addEventListener('click', async () => {
     }
 });
 
+
+window.captureAndEstimatePose = () => {
+    console.log("Capture & Estimate Pose 버튼 클릭됨");
+    if (!xrSession) {
+        alert("AR 세션이 시작되지 않았습니다.");
+        return;
+    }
+    if (!trackingReady) {
+        alert("AR tracking이 아직 준비되지 않았습니다. 잠시 후 다시 시도해주세요.");
+        return;
+    }
+    if (isCapturing) {
+        console.warn("현재 캡처 진행 중입니다. 기다려주세요.");
+        return;
+    }
+    isCaptureRequested = true;
+};
+
+
 // 캡처하고 서버에 전송하는 async 함수
 async function captureAndSendPose(xrFrame) {
-    console.log("Capture 진행 중...");
-
     const capturePose = xrFrame.getViewerPose(xrReferenceSpace);
-    if (!capturePose) {
-        throw new Error("캡처 시점 pose를 얻지 못했습니다.");
-    }
+    if (!capturePose) throw new Error("캡처 시점 pose를 얻지 못했습니다.");
 
     const { position, orientation } = capturePose.transform;
     const relPosition = [position.x, position.y, position.z];
@@ -136,50 +175,43 @@ async function captureAndSendPose(xrFrame) {
     const glWidth = glCanvas.width;
     const glHeight = glCanvas.height;
 
-    // 캡처용 임시 canvas 생성
     const finalCanvas = document.createElement("canvas");
     finalCanvas.width = glWidth;
     finalCanvas.height = glHeight;
     const ctx = finalCanvas.getContext("2d");
 
-    // 1. 비디오 프레임 그리기 (배경)
     ctx.drawImage(video, 0, 0, glWidth, glHeight);
 
-    // 2. WebGL 렌더링 내용 읽어서 덮어쓰기
     const pixels = new Uint8Array(glWidth * glHeight * 4);
     gl.readPixels(0, 0, glWidth, glHeight, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
     const imageData = new ImageData(new Uint8ClampedArray(pixels), glWidth, glHeight);
 
-    // WebGL 캡처는 상하 반전되어 있으므로 뒤집어서 draw
     const tempCanvas = document.createElement("canvas");
     tempCanvas.width = glWidth;
     tempCanvas.height = glHeight;
     const tempCtx = tempCanvas.getContext("2d");
     tempCtx.putImageData(imageData, 0, 0);
+
     ctx.save();
     ctx.translate(0, glHeight);
     ctx.scale(1, -1);
     ctx.drawImage(tempCanvas, 0, 0);
     ctx.restore();
 
-    // 최종 Blob 생성
     const imageBlob = await new Promise((resolve, reject) => {
         finalCanvas.toBlob(blob => {
             if (blob) resolve(blob);
-            else reject(new Error("toBlob 실패"));
+            else reject(new Error("Canvas toBlob 실패"));
         }, 'image/jpeg', 0.9);
     });
 
     const imageFile = new File([imageBlob], "captured.jpg", { type: "image/jpeg" });
+    console.log("서버에 Pose 요청 전송 중...");
 
-    console.log("서버에 Pose 요청 전송...");
     const result = await sendPoseEstimation(imageFile, intrinsicsMatrix);
+    console.log("서버 응답 수신:", result);
 
-    if (result.error) {
-        throw new Error("Pose 추정 실패: " + result.error);
-    }
-
-    console.log("절대 pose:", result.position, result.rotation);
+    if (result.error) throw new Error("Pose 추정 실패: " + result.error);
 
     posePairs.push({
         relative: [relPosition, relRotation],
@@ -259,9 +291,15 @@ window.testSendPath = async () => {
     }
 };
 
+*/
 
 
-/*
+
+
+
+
+
+/* >>>2<<<
 // WebXR 카메라 사용 코드
 import { sendPoseEstimation, sendTransformation, sendPathRequest } from './api_script.js';
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js';
