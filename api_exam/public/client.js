@@ -61,6 +61,17 @@ document.getElementById('start-ar').addEventListener('click', async () => {
             domOverlay: { root: document.body }
         });
 
+        // AR 세션 요청 직후 버튼 표시/숨김 제어
+        document.getElementById('start-ar').classList.add('hidden'); // AR START 버튼 숨김
+        document.getElementById('log-position').classList.remove('hidden'); // 현재 위치 출력 버튼 보이기
+
+        // 세션 종료 시 버튼 초기화
+        xrSession.addEventListener('end', () => {
+            document.getElementById('start-ar').classList.remove('hidden');
+            document.getElementById('log-position').classList.add('hidden');
+        });
+
+
         // renderer, scene 설정
         renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
