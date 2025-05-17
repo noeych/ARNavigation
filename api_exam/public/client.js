@@ -3,11 +3,11 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.m
 const posePairs = [];   // 페어 저장용 배열
 const intrinsicsMatrix = [[500, 0, 320], [0, 500, 240], [0, 0, 1]];
 
-let xrSession = null;
-let xrReferenceSpace = null;
-let renderer = null;
-let scene = null;
-let cubesAdded = [false, false, false, false]; // 이미지별 중복 방지
+let xrSession = null;  // WebXR 세션
+let xrReferenceSpace = null;  // 좌표계 기준
+let renderer = null;  // three.js renderer
+let scene = null;  // 실제 3D 공간
+let cubesAdded = [false, false, false, false];
 
 // AR 세션 시작
 document.getElementById('start-ar').addEventListener('click', async () => {
@@ -22,11 +22,13 @@ document.getElementById('start-ar').addEventListener('click', async () => {
                 img.onerror = reject;
             });
         }
+        // WebXR용 이미지 포맷으로 변환
         imageBitmaps.push(await createImageBitmap(img));
     }
 
     const trackedImages = imageBitmaps.map(bitmap => ({ image: bitmap, widthInMeters: 0.2 }));
 
+    // WebXR 세션 요청
     try {
         xrSession = await navigator.xr.requestSession("immersive-ar", {
             requiredFeatures: ["local", "hit-test", "camera-access", "image-tracking"],
@@ -35,12 +37,14 @@ document.getElementById('start-ar').addEventListener('click', async () => {
             domOverlay: { root: document.body }
         });
 
+        // renderer, scene 설정
         renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.xr.enabled = true;
         renderer.xr.setReferenceSpaceType('local');
         document.body.appendChild(renderer.domElement);
         await renderer.xr.setSession(xrSession);
+        cubesAdded = [false, false, false, false];
 
         xrReferenceSpace = await xrSession.requestReferenceSpace("local");
 
@@ -49,25 +53,25 @@ document.getElementById('start-ar').addEventListener('click', async () => {
 
         // 경로 정의 (마커 index 기준)
         const markerPaths = [
-            [ // Marker 0
+            [ // Marker 1
                 [0, 0, 0],
                 [-0.1, -0.1, 0],
                 [0, 0, -0.5],
                 [0.2, 0, -1.0],
                 [0.4, 0, -1.5]
             ],
-            [ // Marker 1
+            [ // Marker 2
                 [0, 0, 0],
                 [0.1, 0, -0.3],
                 [0.3, 0, -0.7],
                 [0.5, 0, -1.2]
             ],
-            [ // Marker 2
+            [ // Marker 3
                 [0, 0, 0],
                 [-0.2, 0.1, -0.2],
                 [-0.3, 0.1, -0.8]
             ],
-            [ // Marker 3
+            [ // Marker 4
                 [0, 0, 0],
                 [0.15, -0.05, -0.2],
                 [0.25, -0.1, -0.6],
@@ -79,12 +83,15 @@ document.getElementById('start-ar').addEventListener('click', async () => {
         renderer.setAnimationLoop((timestamp, xrFrame) => {
             if (!xrFrame || !xrReferenceSpace) return;
 
+            // 이미지 트래킹 결과
             const results = xrFrame.getImageTrackingResults();
             for (const result of results) {
                 const pose = xrFrame.getPose(result.imageSpace, xrReferenceSpace);
                 const idx = result.index;
 
+                // 트래킹된 마커 처리
                 if (pose && result.trackingState === "tracked" && !cubesAdded[idx]) {
+                    console.log(`인식된 마커: ${imgIds[idx]}`);
                     const base = pose.transform.position;
                     const nodePositions = markerPaths[idx].map(offset =>
                         new THREE.Vector3(
@@ -94,6 +101,7 @@ document.getElementById('start-ar').addEventListener('click', async () => {
                         )
                     );
 
+                    // 경로, 오브젝트 추가
                     nodePositions.forEach((pos, i) => {
                         const color = i === 0 ? 0x00ff00 : (i === nodePositions.length - 1 ? 0xff0000 : 0xffff00);
                         const cube = new THREE.Mesh(
@@ -124,6 +132,7 @@ document.getElementById('start-ar').addEventListener('click', async () => {
                 }
             }
 
+            // AR 렌더링
             const viewerPose = xrFrame.getViewerPose(xrReferenceSpace);
             if (viewerPose) {
                 const camera = renderer.xr.getCamera();
