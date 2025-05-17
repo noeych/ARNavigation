@@ -1,13 +1,35 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js';
 
-const posePairs = [];   // 페어 저장용 배열
-const intrinsicsMatrix = [[500, 0, 320], [0, 500, 240], [0, 0, 1]];
-
+// WebXR 변수
 let xrSession = null;  // WebXR 세션
 let xrReferenceSpace = null;  // 좌표계 기준
 let renderer = null;  // three.js renderer
 let scene = null;  // 실제 3D 공간
 let cubesAdded = [false, false, false, false];
+
+// 걸음 수 측정 변수
+let stepCount = 0;
+let lastPeakTime = 0;
+let accBuffer = [];
+const stepLength = 0.7; // 평균 보폭 (단위: m)
+
+// DeviceMotion 기반 걸음 수 측정
+window.addEventListener("devicemotion", (event) => {
+    const acc = event.accelerationIncludingGravity;
+    const magnitude = Math.sqrt(acc.x ** 2 + acc.y ** 2 + acc.z ** 2);
+
+    accBuffer.push(magnitude);
+    if (accBuffer.length > 10) accBuffer.shift();
+
+    const avg = accBuffer.reduce((a, b) => a + b, 0) / accBuffer.length;
+    const now = Date.now();
+
+    if (magnitude - avg > 3 && now - lastPeakTime > 400) {
+        stepCount++;
+        lastPeakTime = now;
+        console.log(`\u{1F6B6} 걸음 인식됨! 총 걸음 수: ${stepCount}`);
+    }
+});
 
 // AR 세션 시작
 document.getElementById('start-ar').addEventListener('click', async () => {
@@ -93,11 +115,13 @@ document.getElementById('start-ar').addEventListener('click', async () => {
                 if (pose && result.trackingState === "tracked" && !cubesAdded[idx]) {
                     console.log(`인식된 마커: ${imgIds[idx]}`);
                     const base = pose.transform.position;
+                    const walkedDistance = stepCount * stepLength; // 누적 걸음수 기반 이동 거리
+
                     const nodePositions = markerPaths[idx].map(offset =>
                         new THREE.Vector3(
                             base.x + offset[0],
                             base.y + offset[1],
-                            base.z + offset[2]
+                            base.z + offset[2] - walkedDistance // z축 방향으로 보정 적용
                         )
                     );
 
