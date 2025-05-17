@@ -1,0 +1,46 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f8f9fb;
+    overflow: hidden;
+}
+
+.start-ar-button {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.2s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0 0 -50px;
+}
+
+.hidden {
+    display: none;
+}
+
+.start-ar-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.position-button {
+    background-color: white;
+    top: 8px;
+    left: 90px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-left: -70px;
+    font-size: 14px;
+    padding: 10px 16px;
+    opacity: 0.7;
+}

@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR Pose Estimation</title> 
+  <title>AR Navigation</title> 
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button id="start-ar">AR START</button>
-  <button id="log-position" style="position:absolute; top:8px; left:90px; z-index:999;" disabled>현재 위치 출력</button>
-  <!-- <button id="capture" onclick="captureAndEstimatePose()">Capture & Estimate Pose</button>
-  <button id="transform" onclick="sendFinalTransformation()">Send Final Transformation</button>
-  <button id="path" onclick="testSendPath()">Send Path Request</button> -->
+  <button id="start-ar" class="start-ar-button">AR START</button>
+  <button id="log-position" class="position-button"style="position:absolute;" disabled>현재 위치 출력</button>
+  
   <img id="marker-1" src="/test.png" style="display:none">
   <img id="marker-2" src="/test2.png" style="display:none">
   <img id="marker-3" src="/test3.png" style="display:none">
   <img id="marker-4" src="/test4.png" style="display:none">
 
-  <!-- 모듈 스크립트 불러오기 -->
   <script type="module" src="./client.js"></script>
 
 </body>
