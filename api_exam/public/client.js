@@ -6,6 +6,8 @@ let xrReferenceSpace = null;  // 좌표계 기준
 let renderer = null;  // three.js renderer
 let scene = null;  // 실제 3D 공간
 let cubesAdded = [false, false, false, false];
+let latestXRFrame = null; // 최신 XRFrame
+let latestViewerPose = null;
 
 // 걸음 수 측정 변수
 let stepCount = 0;
@@ -101,9 +103,27 @@ document.getElementById('start-ar').addEventListener('click', async () => {
             ]
         ];
 
+        let viewerPoseReady = false;
+
         // 애니메이션 루프
         renderer.setAnimationLoop((timestamp, xrFrame) => {
             if (!xrFrame || !xrReferenceSpace) return;
+
+            // viewerPose 있는 경우에만 프레임 저장
+            const pose = xrFrame.getViewerPose(xrReferenceSpace);
+            if (pose) {
+                latestViewerPose = pose;
+                latestXRFrame = xrFrame;
+                if (!viewerPoseReady) {
+                    document.getElementById('log-position').disabled = false;
+                    viewerPoseReady = true;
+                    console.log("viewerPose 확보됨. 위치 버튼 활성화");
+                }
+
+                // 렌더링
+                const camera = renderer.xr.getCamera();
+                renderer.render(scene, camera);
+            }
 
             // 이미지 트래킹 결과
             const results = xrFrame.getImageTrackingResults();
@@ -111,17 +131,30 @@ document.getElementById('start-ar').addEventListener('click', async () => {
                 const pose = xrFrame.getPose(result.imageSpace, xrReferenceSpace);
                 const idx = result.index;
 
+            // AR 렌더링
+            const viewerPose = xrFrame.getViewerPose(xrReferenceSpace);
+            if (viewerPose) {
+                // 최초 pose 확보 시 버튼 활성화
+                if (!viewerPoseReady) {
+                    document.getElementById('log-position').disabled = false;
+                    viewerPoseReady = true;
+                    console.log("viewerPose 확보됨. 위치 버튼 활성화");
+                }
+
+                const camera = renderer.xr.getCamera();
+                renderer.render(scene, camera);
+            }
+
                 // 트래킹된 마커 처리
                 if (pose && result.trackingState === "tracked" && !cubesAdded[idx]) {
                     console.log(`인식된 마커: ${imgIds[idx]}`);
-                    const base = pose.transform.position;
-                    const walkedDistance = stepCount * stepLength; // 누적 걸음수 기반 이동 거리
+                    markerBases[idx] = pose.transform.position;
 
                     const nodePositions = markerPaths[idx].map(offset =>
                         new THREE.Vector3(
                             base.x + offset[0],
                             base.y + offset[1],
-                            base.z + offset[2] - walkedDistance // z축 방향으로 보정 적용
+                            base.z + offset[2] - walkedDistance // 사용자의 걸음만큼 z축 방향으로 보정 적용
                         )
                     );
 
@@ -155,17 +188,22 @@ document.getElementById('start-ar').addEventListener('click', async () => {
                     cubesAdded[idx] = true;
                 }
             }
-
-            // AR 렌더링
-            const viewerPose = xrFrame.getViewerPose(xrReferenceSpace);
-            if (viewerPose) {
-                const camera = renderer.xr.getCamera();
-                renderer.render(scene, camera);
-            }
         });
 
     } catch (err) {
         console.error("AR 세션 시작 실패:", err);
         alert("AR 세션을 시작할 수 없습니다: " + err.message);
     }
+
+    document.getElementById('log-position').addEventListener('click', () => {
+    if (!latestViewerPose || !xrReferenceSpace) {
+        console.warn("viewerPose가 아직 준비되지 않았습니다.");
+        return;
+    }
+
+    const pos = latestViewerPose.transform.position;
+    console.log(`현재 위치: x=${pos.x.toFixed(3)}, y=${pos.y.toFixed(3)}, z=${pos.z.toFixed(3)}`);
 });
+
+}
+);
