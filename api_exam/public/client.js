@@ -8,6 +8,51 @@ let scene = null;  // 실제 3D 공간
 let cubesAdded = [false, false, false, false];
 let latestXRFrame = null; // 최신 XRFrame
 let latestViewerPose = null;
+let markerBases = [];
+
+let nodes = [];
+let markers = [];
+let transformedNodes = [];
+
+// Load JSON Map Data
+fetch('./3F_graph_map.json')
+    .then((res) => res.json())
+    .then((data) => {
+        nodes = data.nodes;
+        markers = data.markers;
+    });
+
+
+const marker = markers[0];
+
+// Coordinate Transform Helper
+function transformPosition(pos, marker) {
+    const dx = pos[0] - marker.position[0];
+    const dy = pos[1] - marker.position[1];
+    const dz = pos[2]
+    const rad = marker.orientation[0]
+    const rotatedY = dy * Math.cos(rad) - dz * Math.sin(rad);
+    const rotatedZ = dy * Math.sin(rad) + dz * Math.cos(rad);
+    return new THREE.Vector3(dx, rotatedY, rotatedZ);
+}
+
+
+transformedNodes = nodes.map((node) => {
+    return {
+        ...node,
+        worldPos: transformPosition(node.position, marker)
+    };
+});
+
+transformedNodes.forEach((node) => {
+    const sphere = new THREE.Mesh(
+        new THREE.SphereGeometry(0.1),
+        new THREE.MeshBasicMaterial({ color: 0xff0000 })
+    );
+    sphere.position.copy(node.worldPos);
+    scene.add(sphere);
+});
+
 
 // 걸음 수 측정 변수
 let stepCount = 0;
@@ -161,11 +206,13 @@ document.getElementById('start-ar').addEventListener('click', async () => {
                     console.log(`인식된 마커: ${imgIds[idx]}`);
                     markerBases[idx] = pose.transform.position;
 
+                    const base = markerBases[idx];
+
                     const nodePositions = markerPaths[idx].map(offset =>
                         new THREE.Vector3(
                             base.x + offset[0],
                             base.y + offset[1],
-                            base.z + offset[2] - walkedDistance // 사용자의 걸음만큼 z축 방향으로 보정 적용
+                            base.z + offset[2]
                         )
                     );
 
