@@ -1,0 +1,2522 @@
+{
+  "nodes": [
+    {
+      "id": "N1",
+      "position": [
+        135.03349587251728,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N2",
+      "position": [
+        139.1573933217713,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N3",
+      "position": [
+        143.86183944106594,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N4",
+      "position": [
+        144.74267190595515,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N5",
+      "position": [
+        148.50622880139088,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N6",
+      "position": [
+        152.75023976858435,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N7",
+      "position": [
+        157.29453453062644,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N8",
+      "position": [
+        135.07353371183044,
+        75.86856533228713,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "1340",
+      "landmark": null
+    },
+    {
+      "id": "N9",
+      "position": [
+        135.07353371183044,
+        78.1907600124496,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N10",
+      "position": [
+        139.2374690003976,
+        75.86856533228713,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N11",
+      "position": [
+        139.2374690003976,
+        78.1907600124496,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N12",
+      "position": [
+        143.86183944106594,
+        75.82852749297399,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N13",
+      "position": [
+        144.7827097452683,
+        78.15072217313646,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N14",
+      "position": [
+        148.4261531227646,
+        75.82852749297399,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N15",
+      "position": [
+        148.44617204242115,
+        78.17074109279302,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N16",
+      "position": [
+        152.69018300961466,
+        75.80850857331743,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N17",
+      "position": [
+        152.7102019292712,
+        78.21077893210618,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N18",
+      "position": [
+        157.23447777165669,
+        75.86856533228713,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N19",
+      "position": [
+        157.25449669131328,
+        78.17074109279302,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N20",
+      "position": [
+        166.7536824813091,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N21",
+      "position": [
+        171.20934717431584,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N22",
+      "position": [
+        172.24625540157754,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N23",
+      "position": [
+        181.25098474358703,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N24",
+      "position": [
+        181.05997533330196,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N25",
+      "position": [
+        184.090346903601,
+        74.22950287854194,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "엘리베이터 입구",
+      "landmark": null
+    },
+    {
+      "id": "N26",
+      "position": [
+        184.090346903601,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N27",
+      "position": [
+        183.02464355337676,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N28",
+      "position": [
+        166.7536824813091,
+        75.89401345388308,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N29",
+      "position": [
+        171.10019893986725,
+        75.86672639527093,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N30",
+      "position": [
+        172.2735424601897,
+        78.15883931869153,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N31",
+      "position": [
+        181.00540121607767,
+        78.15883931869153,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N32",
+      "position": [
+        181.2236976849749,
+        75.83943933665878,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N33",
+      "position": [
+        166.7536824813091,
+        82.19732399328971,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N34",
+      "position": [
+        165.86108368633447,
+        82.25189811051403,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N35",
+      "position": [
+        167.74389073057282,
+        84.10741809614022,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N36",
+      "position": [
+        166.7536824813091,
+        84.08013103752808,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N37",
+      "position": [
+        166.7536824813091,
+        87.6001615984954,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N38",
+      "position": [
+        167.71660367196066,
+        87.6001615984954,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N39",
+      "position": [
+        165.86108368633447,
+        87.57287453988326,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N40",
+      "position": [
+        166.7536824813091,
+        89.72855217024309,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N41",
+      "position": [
+        130.21430642931315,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N42",
+      "position": [
+        130.19184198058184,
+        75.91113769232729,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N43",
+      "position": [
+        130.124448634388,
+        78.18004701418737,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N44",
+      "position": [
+        128.01279045364691,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N45",
+      "position": [
+        126.97942581200768,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N46",
+      "position": [
+        126.95696136327639,
+        75.91113769232729,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N47",
+      "position": [
+        126.93449691454511,
+        77.9329380781432,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N48",
+      "position": [
+        120.12776894896486,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N49",
+      "position": [
+        117.85885962710476,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N50",
+      "position": [
+        117.88132407583606,
+        76.02345993598372,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N51",
+      "position": [
+        120.12776894896486,
+        76.02345993598372,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N52",
+      "position": [
+        120.15023339769616,
+        77.91047362941191,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N53",
+      "position": [
+        117.88132407583606,
+        77.9554025268745,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N54",
+      "position": [
+        124.95762542619177,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N55",
+      "position": [
+        124.8902320799979,
+        75.8662087948647,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N56",
+      "position": [
+        113.09639649607172,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N57",
+      "position": [
+        113.02900314987787,
+        75.8662087948647,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N58",
+      "position": [
+        110.87241607167422,
+        75.8662087948647,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N59",
+      "position": [
+        109.16511796809634,
+        75.8662087948647,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N60",
+      "position": [
+        110.98473831533067,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N61",
+      "position": [
+        109.18758241682762,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N62",
+      "position": [
+        110.89488052040551,
+        77.86554473194933,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N63",
+      "position": [
+        108.96293792951475,
+        77.86554473194933,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N64",
+      "position": [
+        102.20659716022989,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N65",
+      "position": [
+        102.1839877795713,
+        76.17666845611531,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N66",
+      "position": [
+        102.1613783989127,
+        77.84976262485071,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N67",
+      "position": [
+        99.8100028104197,
+        76.15405907545673,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N68",
+      "position": [
+        99.87783095239547,
+        77.82715324419212,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N69",
+      "position": [
+        95.46900172397109,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N70",
+      "position": [
+        95.4463923433125,
+        78.1889033347295,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N71",
+      "position": [
+        99.8326121910783,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N72",
+      "position": [
+        94.54201711696905,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N73",
+      "position": [
+        94.47418897499327,
+        76.17666845611531,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N74",
+      "position": [
+        90.83407868896084,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N75",
+      "position": [
+        90.83407868896084,
+        77.91759076682646,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N76",
+      "position": [
+        85.22695228563137,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N77",
+      "position": [
+        85.13651476299702,
+        75.90535588821227,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N78",
+      "position": [
+        84.77476467245964,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N79",
+      "position": [
+        84.70693653048389,
+        78.07585643143658,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N80",
+      "position": [
+        82.20059002353314,
+        75.38534013306477,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N81",
+      "position": [
+        81.58684199959893,
+        75.45316827504054,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N82",
+      "position": [
+        82.20059002353314,
+        76.9472874580173,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N83",
+      "position": [
+        81.55517618972073,
+        77.30182446241616,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N84",
+      "position": [
+        82.20059002353314,
+        77.32233767638525,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N85",
+      "position": [
+        82.20059002353314,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N86",
+      "position": [
+        79.89360585822516,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N87",
+      "position": [
+        79.89360585822516,
+        81.17882190257247,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N88",
+      "position": [
+        77.24740125621372,
+        81.15830868860338,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N89",
+      "position": [
+        77.30894089812097,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N90",
+      "position": [
+        77.34996732605912,
+        79.10112831660214,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N91",
+      "position": [
+        70.60111993023149,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N92",
+      "position": [
+        68.38569282157076,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N93",
+      "position": [
+        68.36517960760166,
+        81.15830868860338,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N94",
+      "position": [
+        70.53958028832425,
+        81.19933511654155,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N95",
+      "position": [
+        65.59589572177575,
+        79.29160621741703,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N96",
+      "position": [
+        63.56637387798007,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N97",
+      "position": [
+        65.61640893574483,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N98",
+      "position": [
+        63.56637387798007,
+        73.51222505027091,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N99",
+      "position": [
+        64.28305002775456,
+        73.51222505027091,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N100",
+      "position": [
+        61.329147216206906,
+        73.51222505027091,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N101",
+      "position": [
+        61.30863400223782,
+        72.82994381715652,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N102",
+      "position": [
+        61.65735863971219,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N103",
+      "position": [
+        61.616332211774036,
+        81.11728226066522,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N104",
+      "position": [
+        59.046389200250715,
+        73.51222505027091,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N105",
+      "position": [
+        58.98682217813097,
+        74.26369723964609,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N106",
+      "position": [
+        55.28196736425518,
+        73.51222505027091,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N107",
+      "position": [
+        55.28196736425518,
+        72.83408870877238,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N108",
+      "position": [
+        59.026533526210805,
+        79.10112831660214,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N109",
+      "position": [
+        59.046389200250715,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N110",
+      "position": [
+        56.683563989501124,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N111",
+      "position": [
+        56.66370831546121,
+        81.19332747957556,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N112",
+      "position": [
+        55.28196736425518,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N113",
+      "position": [
+        55.28196736425518,
+        79.10112831660214,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N114",
+      "position": [
+        49.23768622453391,
+        79.10112831660214,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N115",
+      "position": [
+        49.178119202414166,
+        78.13555367742903,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N116",
+      "position": [
+        47.21240747246283,
+        78.13555367742903,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N117",
+      "position": [
+        47.25211882054265,
+        79.10112831660214,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N118",
+      "position": [
+        46.39832483682641,
+        79.10112831660214,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N119",
+      "position": [
+        46.39832483682641,
+        80.10695340967332,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N120",
+      "position": [
+        37.27719054109306,
+        69.86389267584973,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N121",
+      "position": [
+        38.24575817001381,
+        69.83522360572427,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N122",
+      "position": [
+        38.131081889511954,
+        75.11033250880936,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N123",
+      "position": [
+        37.27719054109306,
+        75.05299436855844,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N124",
+      "position": [
+        38.24575817001381,
+        77.31785090846998,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N125",
+      "position": [
+        37.27719054109306,
+        77.34651997859545,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N126",
+      "position": [
+        37.27719054109306,
+        71.55536781325202,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N127",
+      "position": [
+        36.439606752109675,
+        71.4980296730011,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N128",
+      "position": [
+        37.27719054109306,
+        79.10112831660214,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N129",
+      "position": [
+        37.27719054109306,
+        81.4461970065366,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N130",
+      "position": [
+        38.24575817001381,
+        81.56087328703845,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N131",
+      "position": [
+        36.41093768198421,
+        81.47486607666205,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N132",
+      "position": [
+        38.217089099888355,
+        84.05508238795368,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N133",
+      "position": [
+        36.41093768198421,
+        84.74314007096478,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N134",
+      "position": [
+        37.27719054109306,
+        84.08375145807915,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N135",
+      "position": [
+        37.27719054109306,
+        84.85781635146662,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N136",
+      "position": [
+        37.27719054109306,
+        89.50220571179156,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N137",
+      "position": [
+        38.217089099888355,
+        89.58821292216795,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    },
+    {
+      "id": "N138",
+      "position": [
+        36.41093768198421,
+        89.53087478191703,
+        0
+      ],
+      "floor": "3F",
+      "type": "unknown",
+      "name": "",
+      "landmark": null
+    }
+  ],
+  "edges": [
+    {
+      "start": "N7",
+      "end": "N18",
+      "length": 1.08,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N7",
+      "end": "N20",
+      "length": 9.46,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N20",
+      "end": "N21",
+      "length": 4.46,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N21",
+      "end": "N22",
+      "length": 1.04,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N24",
+      "end": "N22",
+      "length": 8.81,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N23",
+      "end": "N24",
+      "length": 0.19,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N23",
+      "end": "N27",
+      "length": 1.77,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N27",
+      "end": "N26",
+      "length": 1.07,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N26",
+      "end": "N25",
+      "length": 2.72,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N23",
+      "end": "N32",
+      "length": 1.11,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N24",
+      "end": "N31",
+      "length": 1.21,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N22",
+      "end": "N30",
+      "length": 1.21,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N21",
+      "end": "N29",
+      "length": 1.09,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N20",
+      "end": "N28",
+      "length": 1.05,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N7",
+      "end": "N19",
+      "length": 1.22,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N33",
+      "end": "N20",
+      "length": 5.25,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N33",
+      "end": "N34",
+      "length": 0.89,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N36",
+      "end": "N33",
+      "length": 1.88,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N36",
+      "end": "N35",
+      "length": 0.99,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N36",
+      "end": "N37",
+      "length": 3.52,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N37",
+      "end": "N38",
+      "length": 0.96,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N37",
+      "end": "N39",
+      "length": 0.89,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N37",
+      "end": "N40",
+      "length": 2.13,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N41",
+      "end": "N1",
+      "length": 4.82,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N1",
+      "end": "N2",
+      "length": 4.12,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N2",
+      "end": "N3",
+      "length": 4.7,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N3",
+      "end": "N4",
+      "length": 0.88,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N4",
+      "end": "N5",
+      "length": 3.76,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N5",
+      "end": "N6",
+      "length": 4.24,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N6",
+      "end": "N7",
+      "length": 4.54,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N6",
+      "end": "N16",
+      "length": 1.14,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N17",
+      "end": "N6",
+      "length": 1.26,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N15",
+      "end": "N5",
+      "length": 1.22,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N5",
+      "end": "N14",
+      "length": 1.12,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N13",
+      "end": "N4",
+      "length": 1.2,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N3",
+      "end": "N12",
+      "length": 1.12,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N2",
+      "end": "N10",
+      "length": 1.08,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N1",
+      "end": "N8",
+      "length": 1.08,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N2",
+      "end": "N11",
+      "length": 1.25,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N1",
+      "end": "N9",
+      "length": 1.24,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N41",
+      "end": "N42",
+      "length": 1.04,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N41",
+      "end": "N43",
+      "length": 1.24,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N41",
+      "end": "N44",
+      "length": 2.2,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N44",
+      "end": "N45",
+      "length": 1.03,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N45",
+      "end": "N54",
+      "length": 2.02,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N54",
+      "end": "N48",
+      "length": 4.83,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N48",
+      "end": "N49",
+      "length": 2.27,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N49",
+      "end": "N56",
+      "length": 4.76,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N56",
+      "end": "N60",
+      "length": 2.11,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N60",
+      "end": "N61",
+      "length": 1.8,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N61",
+      "end": "N63",
+      "length": 0.95,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N61",
+      "end": "N59",
+      "length": 1.08,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N60",
+      "end": "N58",
+      "length": 1.09,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N60",
+      "end": "N62",
+      "length": 0.92,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N56",
+      "end": "N57",
+      "length": 1.08,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N49",
+      "end": "N50",
+      "length": 0.92,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N48",
+      "end": "N51",
+      "length": 0.92,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N52",
+      "end": "N48",
+      "length": 0.96,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N49",
+      "end": "N53",
+      "length": 1.01,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N54",
+      "end": "N55",
+      "length": 1.08,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N45",
+      "end": "N46",
+      "length": 1.04,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N47",
+      "end": "N45",
+      "length": 0.99,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N61",
+      "end": "N64",
+      "length": 6.98,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N64",
+      "end": "N71",
+      "length": 2.37,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N71",
+      "end": "N69",
+      "length": 4.36,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N69",
+      "end": "N72",
+      "length": 0.93,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N72",
+      "end": "N74",
+      "length": 3.71,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N74",
+      "end": "N76",
+      "length": 5.61,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N76",
+      "end": "N78",
+      "length": 0.45,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N78",
+      "end": "N82",
+      "length": 2.57,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N82",
+      "end": "N84",
+      "length": 0.38,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N82",
+      "end": "N80",
+      "length": 1.56,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N84",
+      "end": "N85",
+      "length": 2.78,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N85",
+      "end": "N86",
+      "length": 2.31,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N86",
+      "end": "N87",
+      "length": 1.07,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N84",
+      "end": "N83",
+      "length": 0.65,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N80",
+      "end": "N81",
+      "length": 0.62,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N78",
+      "end": "N79",
+      "length": 1.13,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N76",
+      "end": "N77",
+      "length": 1.05,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N74",
+      "end": "N75",
+      "length": 0.97,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N72",
+      "end": "N73",
+      "length": 0.77,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N69",
+      "end": "N70",
+      "length": 1.24,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N71",
+      "end": "N67",
+      "length": 0.79,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N71",
+      "end": "N68",
+      "length": 0.88,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N64",
+      "end": "N65",
+      "length": 0.77,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N64",
+      "end": "N66",
+      "length": 0.9,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N86",
+      "end": "N89",
+      "length": 2.58,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N89",
+      "end": "N91",
+      "length": 6.71,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N91",
+      "end": "N92",
+      "length": 2.22,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N92",
+      "end": "N97",
+      "length": 2.77,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N97",
+      "end": "N96",
+      "length": 2.05,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N96",
+      "end": "N102",
+      "length": 1.91,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N102",
+      "end": "N109",
+      "length": 2.61,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N109",
+      "end": "N110",
+      "length": 2.36,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N110",
+      "end": "N112",
+      "length": 1.4,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N112",
+      "end": "N113",
+      "length": 1.01,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N113",
+      "end": "N114",
+      "length": 6.04,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N113",
+      "end": "N106",
+      "length": 5.59,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N106",
+      "end": "N104",
+      "length": 3.76,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N104",
+      "end": "N100",
+      "length": 2.28,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N100",
+      "end": "N98",
+      "length": 2.24,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N98",
+      "end": "N96",
+      "length": 6.59,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N89",
+      "end": "N88",
+      "length": 1.05,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N89",
+      "end": "N90",
+      "length": 1.01,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N91",
+      "end": "N94",
+      "length": 1.09,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N92",
+      "end": "N93",
+      "length": 1.05,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N97",
+      "end": "N95",
+      "length": 0.82,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N102",
+      "end": "N103",
+      "length": 1.01,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N100",
+      "end": "N101",
+      "length": 0.68,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N98",
+      "end": "N99",
+      "length": 0.72,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N104",
+      "end": "N105",
+      "length": 0.75,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N106",
+      "end": "N107",
+      "length": 0.68,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N109",
+      "end": "N108",
+      "length": 1.01,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N110",
+      "end": "N111",
+      "length": 1.09,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N114",
+      "end": "N115",
+      "length": 0.97,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N114",
+      "end": "N117",
+      "length": 1.99,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N117",
+      "end": "N118",
+      "length": 0.85,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N118",
+      "end": "N128",
+      "length": 9.12,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N128",
+      "end": "N125",
+      "length": 1.75,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N125",
+      "end": "N123",
+      "length": 2.29,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N123",
+      "end": "N126",
+      "length": 3.5,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N120",
+      "end": "N126",
+      "length": 1.69,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N121",
+      "end": "N120",
+      "length": 0.97,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N126",
+      "end": "N127",
+      "length": 0.84,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N123",
+      "end": "N122",
+      "length": 0.86,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N125",
+      "end": "N124",
+      "length": 0.97,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N117",
+      "end": "N116",
+      "length": 0.97,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N118",
+      "end": "N119",
+      "length": 1.01,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N128",
+      "end": "N129",
+      "length": 2.35,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N129",
+      "end": "N130",
+      "length": 0.98,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N129",
+      "end": "N131",
+      "length": 0.87,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N129",
+      "end": "N134",
+      "length": 2.64,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N134",
+      "end": "N132",
+      "length": 0.94,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N134",
+      "end": "N135",
+      "length": 0.77,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N135",
+      "end": "N133",
+      "length": 0.87,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N135",
+      "end": "N136",
+      "length": 4.64,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N136",
+      "end": "N137",
+      "length": 0.94,
+      "directionality": "bidirectional"
+    },
+    {
+      "start": "N136",
+      "end": "N138",
+      "length": 0.87,
+      "directionality": "bidirectional"
+    }
+  ],
+  "markers": [
+    {
+      "id": "M1",
+      "file": "test.png",
+      "position": [
+        135.05866482741106,
+        75.81849146257525,
+        0
+      ],
+      "orientation": [
+        4.71239, 
+        0.0, 
+        0.0
+      ]
+    }
+  ],
+  "guide_lines": {
+    "horizontal": [
+      4868.12956367492,
+      4650.807687717404,
+      5068.028270162605,
+      5004.3939688997125
+    ],
+    "vertical": [
+      10549.80049792958,
+      11646.617960867668,
+      2358.3702469414397,
+      3497.4563568712592,
+      4021.5757326058383,
+      5200.483807352061
+    ]
+  }
+}
