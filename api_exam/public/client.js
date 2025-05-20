@@ -21,6 +21,11 @@ let lastPeakTime = 0;
 let accBuffer = [];
 const stepLength = 0.7; // 평균 보폭 (단위: m)
 
+// 위치 보정 변수수
+let referenceOffset = { x: 0, y: 0, z: 0 };  // 기준 좌표계 튐 보정
+let previousCameraPose = null;              // 직전 카메라 위치 (for 튐 판단)
+
+
 
 // // 1. 좌표 변환 (마커 정보를 이용해 json 노드 객체들의 좌표를 변환)
 // function transformPosition(pos, marker) {
@@ -183,14 +188,40 @@ const startAR = async () => {
 
         let mapPlaced = false; // 중복 시각화 방지용
 
+        let lastTime = null;
+        let lastPos = null;
+        let frameCount = 0;
+        let fpsLastTime = performance.now();
+
         // 애니메이션 루프
         renderer.setAnimationLoop((timestamp, xrFrame) => {
         if (!xrFrame || !xrReferenceSpace) return;
 
         const pose = xrFrame.getViewerPose(xrReferenceSpace);
         if (pose) {
+            const cameraPos = pose.transform.position;
+            const currentCameraPose = { x: cameraPos.x, y: cameraPos.y, z: cameraPos.z };
+
+            // 기준 좌표계 튐 감지 (1.5m 이상 튀었을 경우)
+            if (previousCameraPose) {
+                const dx = currentCameraPose.x - previousCameraPose.x;
+                const dy = currentCameraPose.y - previousCameraPose.y;
+                const dz = currentCameraPose.z - previousCameraPose.z;
+                const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                if (dist > 0.05) {
+                    referenceOffset.x += dx;
+                    referenceOffset.y += dy;
+                    referenceOffset.z += dz;
+                    console.warn("좌표계 튐 감지 — 보정 오프셋 누적됨:", referenceOffset);
+                }
+            }
+            previousCameraPose = currentCameraPose;
+
+
             latestViewerPose = pose;
             latestXRFrame = xrFrame;
+
             if (!viewerPoseReady) {
                 document.getElementById('log-position').disabled = false;
                 viewerPoseReady = true;
@@ -199,7 +230,35 @@ const startAR = async () => {
 
             const camera = renderer.xr.getCamera();
             renderer.render(scene, camera);
-        }
+
+            const currentTime = timestamp;
+            const currentPos = pose.transform.position;
+
+            if (lastTime !== null && lastPos !== null) {
+                const delta = (currentTime - lastTime) / 1000; // 초 단위 시간 차이
+                const dx = currentPos.x - lastPos.x;
+                const dy = currentPos.y - lastPos.y;
+                const dz = currentPos.z - lastPos.z;
+                const distanceXZ = Math.sqrt(dx * dx + dz * dz);
+                const distanceY = Math.sqrt(dy * dy);
+                const speedXZ = distanceXZ / delta; // m/s
+                const speedY = distanceY / delta; // m/s
+
+                console.log(`📏 평균 속도: ${speedXZ.toFixed(4)} m/s, ${speedY.toFixed(4)} m/s`);
+            }
+
+            lastTime = currentTime;
+            lastPos = { x: currentPos.x, y: currentPos.y, z: currentPos.z };
+            }
+
+            // FPS 측정
+            frameCount++;
+            const now = performance.now();
+            if (now - fpsLastTime >= 1000) {
+                console.log(`🖥️ FPS: ${frameCount} frames/sec`);
+                frameCount = 0;
+                fpsLastTime = now;
+            }
 
         // 이미지 트래킹 결과 확인
         if (mapPlaced) return; // 한 번만 실행
@@ -225,7 +284,8 @@ const startAR = async () => {
 
             // 1. 좌표 변환 및 노드 시각화
             // path는 [node, edge, node, edge, ..., node] 형식의 리스트
-            const path = findPathByName("1362", "3F 엘리베이터 입구", nodes, edges);
+            // const path = findPathByName("1362", "3F 엘리베이터 입구", nodes, edges);
+            const path = findPathByName("1340", "1362", nodes, edges);
             console.log(path.length);
 
             const nodePath = [];
@@ -272,7 +332,15 @@ const startAR = async () => {
                 new THREE.SphereGeometry(0.1),  // 오브젝트(구체)
                 new THREE.MeshBasicMaterial({ color: 0xff0000 })
             );
-            sphere.position.copy(node.worldPos);  // 해당 노드의 변환된 AR 공간 상 좌표에 오브젝트 이동
+
+            // 기존 worldPos에 offset 적용 (보정)
+            const corrected = new THREE.Vector3(
+                node.worldPos.x - referenceOffset.x,
+                node.worldPos.y - referenceOffset.y,
+                node.worldPos.z - referenceOffset.z
+            );
+
+            sphere.position.copy(corrected);  // 해당 노드의 변환된 AR 공간 상 좌표에 오브젝트 이동
             scene.add(sphere);  // AR 렌더링 공간에 오브젝트 배치
             });
 
@@ -280,7 +348,20 @@ const startAR = async () => {
             data.edges.forEach((edge) => {
                 const startNode = transformedNodes.find(n => n.id === edge.start);
                 const endNode = transformedNodes.find(n => n.id === edge.end);
+
                 if (startNode && endNode) {
+                    // 보정된 위치 적용
+                    const startPos = new THREE.Vector3(
+                        startNode.worldPos.x - referenceOffset.x,
+                        startNode.worldPos.y - referenceOffset.y,
+                        startNode.worldPos.z - referenceOffset.z
+                    );
+                    const endPos = new THREE.Vector3(
+                        endNode.worldPos.x - referenceOffset.x,
+                        endNode.worldPos.y - referenceOffset.y,
+                        endNode.worldPos.z - referenceOffset.z
+                    );
+
                     const curve = new THREE.LineCurve3(startNode.worldPos, endNode.worldPos);
                     const tubeGeometry = new THREE.TubeGeometry(curve, 20, 0.03, 8, false);  // 튜브를 선처럼 표현
                     const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
