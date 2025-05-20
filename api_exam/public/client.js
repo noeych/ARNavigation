@@ -61,7 +61,21 @@ const startAR = async () => {
     const img = document.getElementById(imgIds[0]);
     await img.decode();
     const bitmap = await createImageBitmap(img);
-    const trackedImages = [{ image: bitmap, widthInMeters: 0.2 }];
+    const trackedImages = [{ image: bitmap, widthInMeters: 0.173 }];
+
+    // json 맵데이터 로드
+    const res = await fetch('./3F_graph_map.json');
+    const data = await res.json();  // 위 json 응답을 js 객체로 파싱
+    nodes = data.nodes;  // json nodes
+    markers = data.markers;  // json markers
+
+    const marker = markers[0];  // 첫번째 마커 기준
+    transformedNodes = nodes.map((node) => {
+    return {
+        ...node,
+        worldPos: transformPosition(node.position, marker),  // 각 노드의 position을 AR 공간(worldPos) 좌표로 변환 
+    };
+    });
 
     try {
         xrSession = await navigator.xr.requestSession("immersive-ar", {  // AR 세션 요청청
@@ -92,46 +106,11 @@ const startAR = async () => {
         scene = new THREE.Scene();
         scene.background = null;
 
-        // json 맵데이터 로드
-        const res = await fetch('./3F_graph_map.json');
-        const data = await res.json();  // 위 json 응답을 js 객체로 파싱
-        nodes = data.nodes;  // json nodes
-        markers = data.markers;  // json markers
-
-        const marker = markers[0];  // 첫번째 마커 기준
-        transformedNodes = nodes.map((node) => {
-        return {
-            ...node,
-            worldPos: transformPosition(node.position, marker),  // 각 노드의 position을 AR 공간(worldPos) 좌표로 변환 
-        };
-        });
-        
-        // transformedNodes의 노드들 AR 시각화
-        transformedNodes.forEach((node) => {
-        const sphere = new THREE.Mesh(  // 3D 객체 생성
-            new THREE.SphereGeometry(0.1),  // 오브젝트(구체)
-            new THREE.MeshBasicMaterial({ color: 0xff0000 })
-        );
-        sphere.position.copy(node.worldPos);  // 해당 노드의 변환된 AR 공간 상 좌표에 오브젝트 이동
-        scene.add(sphere);  // AR 렌더링 공간에 오브젝트 배치
-        });
-
-
-        // edge 시각화 (선 연결)
-        data.edges.forEach((edge) => {
-            const startNode = transformedNodes.find(n => n.id === edge.start);
-            const endNode = transformedNodes.find(n => n.id === edge.end);
-            if (startNode && endNode) {
-                const curve = new THREE.LineCurve3(startNode.worldPos, endNode.worldPos);
-                const tubeGeometry = new THREE.TubeGeometry(curve, 20, 0.03, 8, false);  // 튜브를 선처럼 표현
-                const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-                const tube = new THREE.Mesh(tubeGeometry, material);
-                scene.add(tube);
-            }
-        });
-
         let viewerPoseReady = false;
 
+        let mapPlaced = false; // 중복 시각화 방지용
+
+        // 애니메이션 루프
         renderer.setAnimationLoop((timestamp, xrFrame) => {
         if (!xrFrame || !xrReferenceSpace) return;
 
@@ -140,15 +119,85 @@ const startAR = async () => {
             latestViewerPose = pose;
             latestXRFrame = xrFrame;
             if (!viewerPoseReady) {
-            document.getElementById('log-position').disabled = false;
-            viewerPoseReady = true;
-            console.log("viewerPose 확보됨. 위치 버튼 활성화");
+                document.getElementById('log-position').disabled = false;
+                viewerPoseReady = true;
+                console.log("viewerPose 확보됨. 위치 버튼 활성화");
             }
 
             const camera = renderer.xr.getCamera();
             renderer.render(scene, camera);
         }
+
+        // 이미지 트래킹 결과 확인
+        if (mapPlaced) return; // 한 번만 실행
+        const results = xrFrame.getImageTrackingResults();
+        for (const result of results) {
+            if (result.trackingState !== "tracked") continue;
+
+            const pose = xrFrame.getPose(result.imageSpace, xrReferenceSpace);
+            if (!pose) continue;
+
+            const markerPos = pose.transform.position;
+            const markerRot = pose.transform.orientation; // 회전 쿼터니언
+
+            // Quaternion으로 회전 행렬 생성
+            const quaternion = new THREE.Quaternion(
+            markerRot.x,
+            markerRot.y,
+            markerRot.z,
+            markerRot.w
+            );
+            const matrix = new THREE.Matrix4().makeRotationFromQuaternion(quaternion);
+
+            // 1. 좌표 변환 및 노드 시각화
+            transformedNodes = nodes.map((node) => {
+                const relative = new THREE.Vector3(
+                    node.position[0] - markers[0].position[0],
+                    node.position[1] - markers[0].position[1],
+                    node.position[2] - markers[0].position[2]
+                );
+                const rotated = relative.clone().applyMatrix4(matrix);
+                const worldPos = new THREE.Vector3(
+                    markerPos.x + rotated.x,
+                    markerPos.y + rotated.y,
+                    markerPos.z + rotated.z
+                );
+                return {
+                    ...node,
+                    worldPos: worldPos
+                };
+            });
+
+            // transformedNodes의 노드들 AR 시각화
+            transformedNodes.forEach((node) => {
+            const sphere = new THREE.Mesh(  // 3D 객체 생성
+                new THREE.SphereGeometry(0.1),  // 오브젝트(구체)
+                new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            );
+            sphere.position.copy(node.worldPos);  // 해당 노드의 변환된 AR 공간 상 좌표에 오브젝트 이동
+            scene.add(sphere);  // AR 렌더링 공간에 오브젝트 배치
+            });
+
+            // edge 시각화 (선 연결)
+            data.edges.forEach((edge) => {
+                const startNode = transformedNodes.find(n => n.id === edge.start);
+                const endNode = transformedNodes.find(n => n.id === edge.end);
+                if (startNode && endNode) {
+                    const curve = new THREE.LineCurve3(startNode.worldPos, endNode.worldPos);
+                    const tubeGeometry = new THREE.TubeGeometry(curve, 20, 0.03, 8, false);  // 튜브를 선처럼 표현
+                    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+                    const tube = new THREE.Mesh(tubeGeometry, material);
+                    scene.add(tube);
+                }
+            });
+
+            mapPlaced = true; // 다음부터는 실행 안 함
+            console.log("마커 인식 및 맵 시각화 완료");
+            break;
+        }
         });
+
+
     } catch (err) {
         console.error("AR 세션 시작 실패:", err);
         alert("AR 세션을 시작할 수 없습니다: " + err.message);
