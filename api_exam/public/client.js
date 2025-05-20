@@ -22,16 +22,92 @@ let accBuffer = [];
 const stepLength = 0.7; // 평균 보폭 (단위: m)
 
 
-// 1. 좌표 변환 (마커 정보를 이용해 json 노드 객체들의 좌표를 변환)
-function transformPosition(pos, marker) {
-    const dx = pos[0] - marker.position[0];
-    const dy = pos[1] - marker.position[1];
-    const dz = pos[2];
-    const rad = marker.orientation[0];
-    const rotatedY = dy * Math.cos(rad) - dz * Math.sin(rad);
-    const rotatedZ = dy * Math.sin(rad) + dz * Math.cos(rad);
-    return new THREE.Vector3(dx, rotatedY, rotatedZ);
+// // 1. 좌표 변환 (마커 정보를 이용해 json 노드 객체들의 좌표를 변환)
+// function transformPosition(pos, marker) {
+//     const dx = pos[0] - marker.position[0];
+//     const dy = pos[1] - marker.position[1];
+//     const dz = pos[2];
+//     const rad = marker.orientation[0];
+//     const rotatedY = dy * Math.cos(rad) - dz * Math.sin(rad);
+//     const rotatedZ = dy * Math.sin(rad) + dz * Math.cos(rad);
+//     return new THREE.Vector3(dx, rotatedY, rotatedZ);
+// }
+
+
+// path 찾기
+function findPathByName(startName, endName, nodes, edges) {
+    // 1. name으로 node id 찾기
+    const startNode = nodes.find(n => n.name === startName);
+    const endNode = nodes.find(n => n.name === endName);
+
+    if (!startNode || !endNode) {
+        console.error("시작 또는 도착 노드 이름이 잘못되었습니다.");
+        return null;
+    }
+
+    const startId = startNode.id;
+    const endId = endNode.id;
+
+    // 2. 인접 리스트 생성
+    const graph = {};
+    edges.forEach(edge => {
+        if (!graph[edge.start]) graph[edge.start] = [];
+        if (!graph[edge.end]) graph[edge.end] = [];
+        graph[edge.start].push({ id: edge.end, weight: edge.length, edge });
+        if (edge.directionality === "bidirectional") {
+            graph[edge.end].push({ id: edge.start, weight: edge.length, edge: { ...edge, start: edge.end, end: edge.start } });
+        }
+    });
+
+    // 3. Dijkstra 알고리즘
+    const distances = {};
+    const prev = {};         // prev[nodeId] = { nodeId, viaEdge }
+    const visited = new Set();
+    const pq = [];
+
+    nodes.forEach(n => distances[n.id] = Infinity);
+    distances[startId] = 0;
+    pq.push({ id: startId, dist: 0 });
+
+    while (pq.length > 0) {
+        pq.sort((a, b) => a.dist - b.dist);
+        const { id: current } = pq.shift();
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        const neighbors = graph[current] || [];
+        neighbors.forEach(({ id: neighbor, weight, edge }) => {
+            const newDist = distances[current] + weight;
+            if (newDist < distances[neighbor]) {
+                distances[neighbor] = newDist;
+                prev[neighbor] = { node: current, edge };
+                pq.push({ id: neighbor, dist: newDist });
+            }
+        });
+    }
+
+    // 4. 경로 역추적 (노드-엣지-노드-엣지... 순서로 구성)
+    const path = [];
+    let cur = endId;
+
+    const nodeMap = new Map(nodes.map(n => [n.id, n]));
+    if (!prev[cur]) {
+        console.error("경로를 찾을 수 없습니다.");
+        return null;
+    }
+
+    path.unshift(nodeMap.get(cur)); // 마지막 노드
+
+    while (prev[cur]) {
+        const { node: prevNodeId, edge } = prev[cur];
+        path.unshift(edge); // edge 먼저
+        path.unshift(nodeMap.get(prevNodeId)); // 그 앞 노드
+        cur = prevNodeId;
+    }
+
+    return path;  // [node, edge, node, edge, ..., node] 형식
 }
+
 
 
 // 2. 걸음 수 측정
@@ -66,16 +142,13 @@ const startAR = async () => {
     // json 맵데이터 로드
     const res = await fetch('./3F_graph_map.json');
     const data = await res.json();  // 위 json 응답을 js 객체로 파싱
+    var nodes = null;
     nodes = data.nodes;  // json nodes
+    var markers = null;
     markers = data.markers;  // json markers
+    var edges = null;
+    edges = data.edges; // json edges
 
-    const marker = markers[0];  // 첫번째 마커 기준
-    transformedNodes = nodes.map((node) => {
-    return {
-        ...node,
-        worldPos: transformPosition(node.position, marker),  // 각 노드의 position을 AR 공간(worldPos) 좌표로 변환 
-    };
-    });
 
     try {
         xrSession = await navigator.xr.requestSession("immersive-ar", {  // AR 세션 요청청
@@ -149,8 +222,32 @@ const startAR = async () => {
             );
             const matrix = new THREE.Matrix4().makeRotationFromQuaternion(quaternion);
 
+
             // 1. 좌표 변환 및 노드 시각화
-            transformedNodes = nodes.map((node) => {
+            // path는 [node, edge, node, edge, ..., node] 형식의 리스트
+            const path = findPathByName("1362", "3F 엘리베이터 입구", nodes, edges);
+            console.log(path.length);
+
+            const nodePath = [];
+            const edgePath = [];
+
+            path.forEach((item, index) => {
+            if (index % 2 === 0) {
+                nodePath.push(item); // 0, 2, 4,... → node
+            } else {
+                edgePath.push(item); // 1, 3, 5,... → edge
+            }
+            });
+
+            // const marker = markers[0];  // 첫번째 마커 기준
+            // transformedNodes = nodePath.map((node) => {
+            // return {
+            //     ...node,
+            //     worldPos: transformPosition(node.position, marker),  // 각 노드의 position을 AR 공간(worldPos) 좌표로 변환 
+            //     };
+            // });
+
+            transformedNodes = nodePath.map((node) => {
                 const relative = new THREE.Vector3(
                     node.position[0] - markers[0].position[0],
                     node.position[1] - markers[0].position[1],
@@ -167,6 +264,7 @@ const startAR = async () => {
                     worldPos: worldPos
                 };
             });
+
 
             // transformedNodes의 노드들 AR 시각화
             transformedNodes.forEach((node) => {

@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const http = require('http');
+const ngrok = require('ngrok');
 
 const app = express();
 const port = 3000;
@@ -8,10 +9,17 @@ const port = 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const httpServer = http.createServer(app);
+// HTTP 서버 + ngrok 연동
+const server = http.createServer(app).listen(port, async () => {
+    console.log(`✅ HTTP 서버 실행 중! 접속: http://localhost:${port}`);
 
-httpServer.listen(port, () => {
-    console.log(`HTTP 서버가 http://localhost:${port} 에서 실행 중입니다.`);
-    console.log('WebXR 테스트를 위해서는 ngrok를 사용하여 HTTPS로 터널링하세요.');
-    console.log('예: ngrok http 3000');
+    try {
+        const url = await ngrok.connect({
+        addr: port,
+        proto: 'http'
+        });
+        console.log(`🌐 Ngrok 터널 열림! 외부 접속 주소: ${url}`);
+    } catch (err) {
+        console.error('❌ ngrok 연결 실패:', err);
+    }
 });
