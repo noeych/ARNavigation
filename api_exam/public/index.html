@@ -3,13 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR Navigation</title> 
+  <title>AR Navigation</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js"
+      }
+    }
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <button id="start-ar" class="start-ar-button">AR START</button>
   <button id="log-position" class="position-button"style="position:absolute;" disabled>현재 위치 출력</button>
   
+  <!-- <div id="map-ui">
+    <img src="" id="map-image">
+    <input type="text" id="destination-input" placeholder="목적지를 입력하세요">
+    <button id="confirm-destination">목적지 설정</button>
+  </div> -->
+
+
   <img id="marker-1" src="/test.png" style="display:none">
 
   <script type="module" src="./client.js"></script>
