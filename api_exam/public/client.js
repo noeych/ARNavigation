@@ -27,7 +27,7 @@ let referenceOffset = { x: 0, y: 0, z: 0 };  // 기준 좌표계 튐 보정
 let previousCameraPose = null;              // 직전 카메라 위치 (for 튐 판단)
 
 // 목적지 검색 변수
-let destinationName = null; // 사용자가 입력한 목적지
+let endnName = null; // 사용자가 입력한 목적지
 
 // 미니맵을 위해 마커 정보 전역으로 저장
 let markerPos = null;  // 전역으로 선언
@@ -46,17 +46,25 @@ let markerQuat = null;  // markerRot에서 만든 쿼터니언 저장
 // }
 
 
-// // 1. 목적지 입력
-// document.getElementById('confirm-destination').addEventListener('click', () => {
-//     const input = document.getElementById('destination-input').value.trim();
-//     if (input) {
-//         endnName = input;
-//         document.getElementById('map-ui').style.display = 'none';
-//         document.getElementById('start-ar').classList.remove('hidden');
-//     } else {
-//         alert("목적지를 입력하세요.");
-//     }
-// });
+// 1. 목적지 입력
+document.getElementById('confirm-destination').addEventListener('click', () => {
+    const input = document.getElementById('destination-input').value.trim();
+    if (input) {
+        endnName = input;
+
+        document.getElementById('map-ui').style.display = 'none';
+
+        // 목적지 텍스트 표시
+        document.getElementById('destination-text').innerText = `선택된 목적지: ${endnName}`;
+        document.getElementById('destination-display').classList.remove('hidden');
+
+        // 안내 텍스트 + AR 버튼 표시
+        document.getElementById('start-info').classList.remove('hidden');
+        document.getElementById('start-ar').classList.remove('hidden');
+    } else {
+        alert("목적지를 입력하세요.");
+    }
+});
 
 
 // 2. path 찾기
@@ -157,6 +165,11 @@ window.addEventListener("devicemotion", (event) => {
 
 // 4. AR 세션 시작
 const startAR = async () => {
+    document.getElementById('map-ui').style.display = 'none';
+    document.getElementById('destination-display').classList.add('hidden');
+    document.getElementById('start-info').classList.add('hidden');
+
+
     const imgIds = ["marker-1"];
     const img = document.getElementById(imgIds[0]);
     await img.decode();
@@ -208,14 +221,17 @@ const startAR = async () => {
             domOverlay: { root: document.body },
         });
 
-        // AR 세션 시작 시 AR START 버튼 숨김
+        // AR 세션 시작 시 UI 숨김
         document.getElementById('start-ar').classList.add('hidden');
-        document.getElementById('log-position').classList.remove('hidden');
+        // document.getElementById('log-position').classList.remove('hidden');
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
 
         // AR 세션 종료 시 UI 복원
         xrSession.addEventListener('end', () => {
-        document.getElementById('start-ar').classList.remove('hidden');
-        document.getElementById('log-position').classList.add('hidden');
+            document.getElementById('start-ar').classList.remove('hidden');
+            document.getElementById('log-position').classList.add('hidden');
+            if (header) header.style.display = 'block';
         });
 
         // Three.js 렌더러 초기화 
@@ -224,6 +240,7 @@ const startAR = async () => {
         renderer.xr.enabled = true;
         renderer.xr.setReferenceSpaceType('local');  // 사용자 위치 기준 좌표계 사용 
         document.body.appendChild(renderer.domElement);
+
         await renderer.xr.setSession(xrSession);  // Three.js 렌더러에 WebXR 세션 연결 
         xrReferenceSpace = await xrSession.requestReferenceSpace("local");  // AR 공간 기준 좌표계 (사용자 중심)
         scene = new THREE.Scene();
@@ -246,6 +263,8 @@ const startAR = async () => {
         let lastPos = null;
         let frameCount = 0;
         let fpsLastTime = performance.now();
+
+        let arrivalInstance = null;  // 도착지 모델 인스턴스를 추적할 전역 변수
 
         // 애니메이션 루프
         renderer.setAnimationLoop((timestamp, xrFrame) => {
@@ -283,11 +302,13 @@ const startAR = async () => {
             latestViewerPose = pose;
             latestXRFrame = xrFrame;
 
+            /*
             if (!viewerPoseReady) {
                 document.getElementById('log-position').disabled = false;
                 viewerPoseReady = true;
                 console.log("viewerPose 확보됨. 위치 버튼 활성화");
             }
+            */
 
             const camera = renderer.xr.getCamera();
             renderer.render(scene, camera);
@@ -335,9 +356,6 @@ const startAR = async () => {
             const pose = xrFrame.getPose(result.imageSpace, xrReferenceSpace);
             if (!pose) continue;
 
-            markerPos = pose.transform.position;
-            markerRot = pose.transform.orientation; // 회전 쿼터니언
-
             // ################## 전역변수에 선언됨 갱신으로 변경 ##################
             markerPos = pose.transform.position;
             const markerRot = pose.transform.orientation; // 회전 쿼터니언
@@ -374,8 +392,9 @@ const startAR = async () => {
 
             // 1. 좌표 변환 및 노드 시각화
             // path는 [node, edge, node, edge, ..., node] 형식의 리스트
-            const path = findPathByName("1340", "3F 엘리베이터 입구", nodes, edges);
+            // const path = findPathByName("1340", "3F 엘리베이터 입구", nodes, edges);
             // const path = findPathByName("1340", "1362", nodes, edges);
+            const path = findPathByName("1340", endnName, nodes, edges);
             console.log(path.length);
 
             const nodePath = [];
@@ -537,6 +556,15 @@ const startAR = async () => {
             });
             */
 
+            // 안내 문구 2초간 표시
+            const arNotice = document.getElementById('ar-notice');
+            if (arNotice) {
+                arNotice.classList.remove('hidden');
+                setTimeout(() => {
+                    arNotice.classList.add('hidden');
+                }, 2000);
+            }
+
             mapPlaced = true; // 다음부터는 실행 안 함
             console.log("마커 인식 및 맵 시각화 완료");
             break;
@@ -552,16 +580,29 @@ const startAR = async () => {
 
 
 // 5. 이벤트리스너
-// AR START 버튼
-document.getElementById('start-ar').addEventListener('click', startAR);
 
-// 현재 위치 출력 버튼
-document.getElementById('log-position').addEventListener('click', () => {
-    if (!latestViewerPose || !xrReferenceSpace) {
-        console.warn("viewerPose가 아직 준비되지 않았습니다.");
-        return;
-    }
-
-    const pos = latestViewerPose.transform.position;
-    console.log(`현재 위치: x=${pos.x.toFixed(3)}, y=${pos.y.toFixed(3)}, z=${pos.z.toFixed(3)}`);
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('start-ar').classList.add('hidden');  // 처음엔 AR 버튼 숨기기
+    document.getElementById('destination-display').classList.add('hidden');
+    document.getElementById('start-info').classList.add('hidden');
 });
+
+// AR START 버튼
+document.getElementById('start-ar').addEventListener('click', async () => {
+    document.getElementById('map-ui').style.display = 'none';
+    document.getElementById('destination-display').classList.add('hidden');
+    document.getElementById('start-info').classList.add('hidden');
+
+    await startAR();
+});
+
+// // 현재 위치 출력 버튼 (개발자 확인용)
+// document.getElementById('log-position').addEventListener('click', () => {
+//     if (!latestViewerPose || !xrReferenceSpace) {
+//         console.warn("viewerPose가 아직 준비되지 않았습니다.");
+//         return;
+//     }
+
+//     const pos = latestViewerPose.transform.position;
+//     console.log(`현재 위치: x=${pos.x.toFixed(3)}, y=${pos.y.toFixed(3)}, z=${pos.z.toFixed(3)}`);
+// });
