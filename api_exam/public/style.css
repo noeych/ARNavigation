@@ -131,3 +131,35 @@ header {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+#minimap-container {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    max-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: white;
+    padding: 8px;
+    z-index: 999;
+}
+
+#minimap {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+}
+
+#minimap-marker {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: red;
+    border: 1.5px solid white;
+    border-radius: 50%;
+    top: 100px; /* 초기 위치 */
+    left: 50px;
+}

@@ -223,6 +223,7 @@ const startAR = async () => {
 
         // AR 세션 시작 시 UI 숨김
         document.getElementById('start-ar').classList.add('hidden');
+        document.getElementById('minimap-container').style.display = 'block';
         // document.getElementById('log-position').classList.remove('hidden');
         const header = document.querySelector('header');
         if (header) header.style.display = 'none';
@@ -232,6 +233,7 @@ const startAR = async () => {
             document.getElementById('start-ar').classList.remove('hidden');
             document.getElementById('log-position').classList.add('hidden');
             if (header) header.style.display = 'block';
+            document.getElementById('minimap-container').style.display = 'none';
         });
 
         // Three.js 렌더러 초기화 
@@ -331,6 +333,26 @@ const startAR = async () => {
 
             lastTime = currentTime;
             lastPos = { x: currentPos.x, y: currentPos.y, z: currentPos.z };
+        
+            // 미니맵 마커 위치 업데이트
+            const markerEl = document.getElementById("minimap-marker");
+
+            if (markerPos) {
+                // 기준: 마커를 (0,0)으로 보고 상대 위치 계산
+                const relX = currentCameraPose.x - markerPos.x;
+                const relZ = currentCameraPose.z - markerPos.z;
+
+                // 실내맵 이미지 기준 축척 (단위: meter to pixel)
+                const MAP_SCALE = 10 // 1미터당 10px 비율 (실제에 맞게 조정 필요)
+                const offsetX = 132; // 이미지 중심 위치 보정용 (값 줄이면 2D 지도상 왼쪽, 키우면 오른쪽으로 이동)
+                const offsetY = 52; // 이미지 중심 위치 보정용 (값 줄이면 2D 지도상 위로, 키우면 아래로 이동)
+
+                const pixelX = relX * MAP_SCALE + offsetX;
+                const pixelY = relZ * MAP_SCALE + offsetY;
+
+                markerEl.style.left = `${pixelX}px`;
+                markerEl.style.top = `${pixelY}px`;
+            }
         }
 
         // FPS 측정
