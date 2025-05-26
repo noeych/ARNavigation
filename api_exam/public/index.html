@@ -21,13 +21,19 @@
   <!-- <button id="log-position" class="position-button"style="position:absolute;" disabled>현재 위치 출력</button> -->
   <button id="start-ar" class="start-ar-button hidden">마커 인식</button>
   <div id="ar-notice" class="ar-notice hidden">안내를 시작합니다</div>
-  <div id="map-ui">
-    <img src="3F_miniMap.jpeg" id="map-image">
-    <input type="text" id="destination-input" placeholder="목적지를 입력하세요">
-    <button id="confirm-destination">목적지 설정</button>
+  <div id="ui-box" class="ui-box">
+    <div id="map-ui">
+      <img src="3F_miniMap_name.png" id="map-image">
+      <input type="text" id="destination-input" placeholder="목적지를 입력하세요">
+      <button id="confirm-destination">목적지 설정</button>
+    </div>
   </div>
   <div id="destination-display" class="destination-display hidden">
     <p id="destination-text">선택된 목적지: 없음</p>
+  </div>
+  <div id="start-point-display" class="start-point-display hidden">
+    <p><strong>출발지:</strong><br><span id="start-point-text">1340</span></p>
+    <p><strong>목적지:</strong><br><span id="end-point-text">없음</span></p>
   </div>
   <div id="start-info" class="start-info hidden">
     마커를 인식해 출발지를 설정하세요.
@@ -35,7 +41,9 @@
   <img id="marker-1" src="/test.png" style="display:none">
   <script type="module" src="./client.js"></script>
   <div id="minimap-container">
-    <img id="minimap" src="3F_miniMap_zoomIn.jpg" />
+    <div id="minimap-wrapper">
+      <img id="minimap" src="3F_miniMap_name_remove.png" />
+    </div>
     <div id="minimap-marker"></div>
   </div>
 </body>

@@ -2,21 +2,17 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.m
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.175.0/examples/jsm/loaders/GLTFLoader.js';
 
 // 0. 변수 정의
+
 // WebXR 변수
 let xrSession = null;  // WebXR 세션
 let xrReferenceSpace = null;  // 좌표계 기준
 let renderer = null;  // three.js renderer
 let scene = null;  // 실제 3D 공간
-let latestXRFrame = null;
-let latestViewerPose = null;
-let markerBases = [];
 
 // 좌표 변환 변수
-let nodes = [];
-let markers = [];
 let transformedNodes = [];
 
-// 걸음 수 측정 변수
+// 걸음 수 측정 변수 (개발자 확인용)
 let stepCount = 0;
 let lastPeakTime = 0;
 let accBuffer = [];
@@ -32,18 +28,6 @@ let endnName = null; // 사용자가 입력한 목적지
 // 미니맵을 위해 마커 정보 전역으로 저장
 let markerPos = null;  // 전역으로 선언
 let markerQuat = null;  // markerRot에서 만든 쿼터니언 저장
-
-
-// // 1. 좌표 변환 (마커 정보를 이용해 json 노드 객체들의 좌표를 변환)
-// function transformPosition(pos, marker) {
-//     const dx = pos[0] - marker.position[0];
-//     const dy = pos[1] - marker.position[1];
-//     const dz = pos[2];
-//     const rad = marker.orientation[0];
-//     const rotatedY = dy * Math.cos(rad) - dz * Math.sin(rad);
-//     const rotatedZ = dy * Math.sin(rad) + dz * Math.cos(rad);
-//     return new THREE.Vector3(dx, rotatedY, rotatedZ);
-// }
 
 
 // 1. 목적지 입력
@@ -142,7 +126,7 @@ function findPathByName(startName, endName, nodes, edges) {
 }
 
 
-// 3. 걸음 수 측정
+// 걸음 수 측정 (개발자 확인용)
 // 스마트폰 가속도 센서로부터 연속 데이터를 받아오는 형식 
 window.addEventListener("devicemotion", (event) => {
     const acc = event.accelerationIncludingGravity;  // 중력을 포함한 x,y,z축 가속도 값 반환 
@@ -163,12 +147,12 @@ window.addEventListener("devicemotion", (event) => {
 });
 
 
-// 4. AR 세션 시작
+// 3. AR 세션 시작
 const startAR = async () => {
+    // 3-1. 초기 UI 설정
     document.getElementById('map-ui').style.display = 'none';
     document.getElementById('destination-display').classList.add('hidden');
     document.getElementById('start-info').classList.add('hidden');
-
 
     const imgIds = ["marker-1"];
     const img = document.getElementById(imgIds[0]);
@@ -176,7 +160,8 @@ const startAR = async () => {
     const bitmap = await createImageBitmap(img);
     const trackedImages = [{ image: bitmap, widthInMeters: 0.173 }];
 
-    // json 맵데이터 로드
+
+    // 3-2. json 맵데이터 로드
     const res = await fetch('./3F_graph_map.json');
     const data = await res.json();  // 위 json 응답을 js 객체로 파싱
     var nodes = null;
@@ -186,7 +171,8 @@ const startAR = async () => {
     var edges = null;
     edges = data.edges; // json edges
 
-    // ############################# 3d 모델 파일 로딩 #############################
+
+    // 3-3. 3d 모델 파일 로드
     let baseArrow = null;
     let baseArrival = null;
 
@@ -210,11 +196,11 @@ const startAR = async () => {
 
     console.log("arrow1.gltf 로드 완료");
     });
-    // ############################# 3d 모델 파일 로딩 #############################
 
 
+    // 3-4. AR 세션 준비
     try {
-        xrSession = await navigator.xr.requestSession("immersive-ar", {  // AR 세션 요청청
+        xrSession = await navigator.xr.requestSession("immersive-ar", {  // AR 세션 요청
             requiredFeatures: ["local", "hit-test", "camera-access", "image-tracking"],  // 활성화 기능
             trackedImages,
             optionalFeatures: ["dom-overlay"],  // 선택 기능
@@ -248,16 +234,11 @@ const startAR = async () => {
         scene = new THREE.Scene();
         scene.background = null;
 
-        // ###################### 조명은 반드시 추가! ######################
         const hemi = new THREE.HemisphereLight(0xffffff, 0x444444, 5.0);
         scene.add(hemi);
-        // ###################### 조명은 반드시 추가! ######################
-        // ###################### 오프셋 그룹 추가! ######################
         const offsetGroup = new THREE.Group();
         scene.add(offsetGroup);
-        // ###################### 오프셋 그룹 추가! ######################
 
-        let viewerPoseReady = false;
 
         let mapPlaced = false; // 중복 시각화 방지용
 
@@ -268,7 +249,8 @@ const startAR = async () => {
 
         let arrivalInstance = null;  // 도착지 모델 인스턴스를 추적할 전역 변수
 
-        // 애니메이션 루프
+
+        // 3-5. 애니메이션 루프
         renderer.setAnimationLoop((timestamp, xrFrame) => {
         if (!xrFrame || !xrReferenceSpace) return;
 
@@ -304,13 +286,15 @@ const startAR = async () => {
             latestViewerPose = pose;
             latestXRFrame = xrFrame;
 
-            /*
+
+            /* 개발자 확인용
             if (!viewerPoseReady) {
                 document.getElementById('log-position').disabled = false;
                 viewerPoseReady = true;
                 console.log("viewerPose 확보됨. 위치 버튼 활성화");
             }
             */
+            
 
             const camera = renderer.xr.getCamera();
             renderer.render(scene, camera);
@@ -334,24 +318,31 @@ const startAR = async () => {
             lastTime = currentTime;
             lastPos = { x: currentPos.x, y: currentPos.y, z: currentPos.z };
         
-            // 미니맵 마커 위치 업데이트
-            const markerEl = document.getElementById("minimap-marker");
 
-            if (markerPos) {
-                // 기준: 마커를 (0,0)으로 보고 상대 위치 계산
+            const minimapWrapper = document.getElementById("minimap-wrapper");
+
+            if (markerPos && minimapWrapper) {
                 const relX = currentCameraPose.x - markerPos.x;
                 const relZ = currentCameraPose.z - markerPos.z;
 
-                // 실내맵 이미지 기준 축척 (단위: meter to pixel)
-                const MAP_SCALE = 10 // 1미터당 10px 비율 (실제에 맞게 조정 필요)
-                const offsetX = 132; // 이미지 중심 위치 보정용 (값 줄이면 2D 지도상 왼쪽, 키우면 오른쪽으로 이동)
-                const offsetY = 52; // 이미지 중심 위치 보정용 (값 줄이면 2D 지도상 위로, 키우면 아래로 이동)
+                const containerWidth = 500;
+                const wrapperWidth = 600;
+                const MAP_SCALE = 10; // 지도상 보폭
+                const offsetCenterX = wrapperWidth / 2;
+                const offsetCenterY = wrapperWidth / 2;
+                
+                // 위치 미세 조정 (보정값)
+                const offsetFixX = -352;  // 음수면 오른쪽으로 이동
+                const offsetFixY = -245; // 음수면 아래로 이동
 
-                const pixelX = relX * MAP_SCALE + offsetX;
-                const pixelY = relZ * MAP_SCALE + offsetY;
+                const bgX = -(relX * MAP_SCALE) + offsetCenterX - containerWidth / 2 + offsetFixX ;
+                const bgY = -(relZ * MAP_SCALE) + offsetCenterY - containerWidth / 2 + offsetFixY ;
 
-                markerEl.style.left = `${pixelX}px`;
-                markerEl.style.top = `${pixelY}px`;
+                minimapWrapper.style.left = `${bgX}px`;
+                minimapWrapper.style.top = `${bgY}px`;
+
+                console.log("bgX:", bgX, "bgY:", bgY);
+                console.log("relX:", relX, "relZ:", relZ);
             }
         }
 
@@ -412,7 +403,7 @@ const startAR = async () => {
             console.log(`고정 회전: X=90°, Y=0°, Z=${radToDeg(measuredZ).toFixed(2)}°`);
             // ############################ x90 y0 z? 회전 강제 ############################
 
-            // 1. 좌표 변환 및 노드 시각화
+            // 4. 좌표 변환 및 노드 시각화
             // path는 [node, edge, node, edge, ..., node] 형식의 리스트
             // const path = findPathByName("1340", "3F 엘리베이터 입구", nodes, edges);
             // const path = findPathByName("1340", "1362", nodes, edges);
@@ -532,7 +523,7 @@ const startAR = async () => {
 
             // ############################## 스플라인 arrow 배치 ##############################
 
-            /*
+            /* 디버깅용 시각화
             // transformedNodes의 노드들 AR 시각화
             transformedNodes.forEach((node) => {
             const sphere = new THREE.Mesh(  // 3D 객체 생성
@@ -587,6 +578,10 @@ const startAR = async () => {
                 }, 2000);
             }
 
+            document.getElementById('start-point-text').innerText = '1340';
+            document.getElementById('end-point-text').innerText = endnName;
+            document.getElementById('start-point-display').classList.remove('hidden');
+
             mapPlaced = true; // 다음부터는 실행 안 함
             console.log("마커 인식 및 맵 시각화 완료");
             break;
@@ -602,11 +597,12 @@ const startAR = async () => {
 
 
 // 5. 이벤트리스너
-
+// 카메라 켜지기 전 숨겨놓을 요소들
 window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('start-ar').classList.add('hidden');  // 처음엔 AR 버튼 숨기기
+    document.getElementById('start-ar').classList.add('hidden');
     document.getElementById('destination-display').classList.add('hidden');
     document.getElementById('start-info').classList.add('hidden');
+    document.getElementById('start-point-display').classList.add('hidden');
 });
 
 // AR START 버튼

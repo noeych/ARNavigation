@@ -1,8 +1,11 @@
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
     background: #f8f9fb;
     overflow: hidden;
 }
@@ -25,7 +28,8 @@ header {
 
 
 .start-ar-button {
-    background-color: #4A90E2;
+    background-color: #1E56A0;
+    font-weight: 500;
     color: white;
     border: none;
     padding: 12px 20px;
@@ -62,40 +66,57 @@ header {
     opacity: 0.7;
 }
 
+#ui-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #map-ui {
+    background-color: #F6F6F6;
+    border-radius: 20px;
+    padding: 50px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 50vh;
+    gap: 15px;
+    margin: 20px 0 20px 0;
 }
 
 #map-image {
     width: 80%;
     max-width: 400px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-radius: 8px;
+    border: 2px solid #D6E4F0;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 #destination-input {
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 2px solid #D6E4F0;
     border-radius: 6px;
-    width: 75%;
-    max-width: 300px;
-    margin-bottom: 10px;
+    background-color: white;
+    width: 80%;
+    max-width: 400px;
+    margin-bottom: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 #confirm-destination {
-    padding: 10px 20px;
+    padding: 10px 30px;
     font-size: 15px;
+    font-weight: 500;
     border: none;
-    background-color: #4A90E2;
+    background-color: #1E56A0;
     color: white;
     border-radius: 6px;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .destination-display {
@@ -105,11 +126,31 @@ header {
     color: #333;
 }
 
+.start-point-display {
+    position: fixed;
+    bottom: 200px;
+    left: 30px;
+    z-index: 1000;
+    color: white;
+}
+
+.start-point-display p {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 6px 0;
+}
+
+.start-point-display span {
+    font-size: 15px;
+    color: #D6E4F0;
+    font-weight: bold;
+}
+
 .start-info {
     text-align: center;
     margin-top: 12px;
     font-size: 14px;
-    color: #4A90E2;
+    color: #1E56A0;
     top: 40px;
 }
 
@@ -124,7 +165,6 @@ header {
     font-size: 18px;
     font-weight: 500;
     z-index: 1000;
-    animation: fadein 0.3s ease;
 }
 
 @keyframes fadein {
@@ -134,32 +174,46 @@ header {
 
 #minimap-container {
     display: none;
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
+    position: fixed;
+    top: 20px;     
+    left: 50%;     
     transform: translateX(-50%);
-    width: 60%;
-    max-width: 300px;
+    width: 200px;
+    height: 140px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    background-color: white;
+    border: 6px solid #D6E4F0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
     padding: 8px;
     z-index: 999;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+#minimap-wrapper {
+    position: absolute;
+    width: 600px; /* 지도 크기 (더 크게 설정해 확대 효과) */
+    height: 600px;
+    top: 0;
+    left: 0;
 }
 
 #minimap {
     width: 100%;
-    height: auto;
+    height: 100%;
     border: 1px solid #ccc;
 }
 
 #minimap-marker {
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 7px;
+    height: 7px;
     background: red;
     border: 1.5px solid white;
     border-radius: 50%;
-    top: 100px; /* 초기 위치 */
-    left: 50px;
+    top: 50%; /* 초기 위치 */
+    left: 50%;
+    transform: translate(-50%, -50%); /* 정가운데 고정 */
+    z-index: 10;
 }
